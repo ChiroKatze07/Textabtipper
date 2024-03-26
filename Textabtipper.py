@@ -82,9 +82,11 @@ class TypingApp:
             keyboard.press(char)
             time.sleep(delay)
             keyboard.release(char)
+        self.start_button.config(state=tk.NORMAL)
+        self.stop_button.config(state=tk.DISABLED)
+        self.info_button.config(state=tk.NORMAL)
 
         if not self.stop_flag:
-            messagebox.showinfo("Fertig", "Das Tippen ist abgeschlossen.", font=("Lucida Sans Unicode", 10))
             self.start_button.config(state=tk.NORMAL)
             self.stop_button.config(state=tk.DISABLED)
             self.info_button.config(state=tk.NORMAL)
