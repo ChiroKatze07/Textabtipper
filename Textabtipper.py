@@ -8,7 +8,7 @@ class TypingApp:
     def __init__(self, master):
         self.master = master
         master.title("Textabtipper")
-        master.geometry("500x440")
+        master.geometry("500x500")
 
         self.header_label = tk.Label(master, text="Textabtipper", font=("Lucida Sans Unicode", 20))
         self.header_label.pack()
@@ -34,9 +34,10 @@ class TypingApp:
         self.start_delay_entry = tk.Entry(master)
         self.start_delay_entry.insert(0, "3")  # Standardstartverzögerung
         self.start_delay_entry.pack()
-        self.start_entry = tk.Label(master)
-        self.start_entry.pack()
 
+        self.loop_text = tk.BooleanVar()
+        self.loop_checkbox = tk.Checkbutton(master, text="Endlos wiederholen", variable=self.loop_text)
+        self.loop_checkbox.pack()
 
         self.start_button = tk.Button(master, text="Start", command=self.start_typing, font=("Lucida Sans Unicode", 10))
         self.start_button.pack()
@@ -76,20 +77,19 @@ class TypingApp:
         time.sleep(start_delay)
 
         keyboard = Controller()
-        for char in text:
-            if self.stop_flag:
+        while not self.stop_flag:
+            for char in text:
+                if self.stop_flag:
+                    break
+                keyboard.press(char)
+                time.sleep(delay)
+                keyboard.release(char)
+            if not self.loop_text.get():
                 break
-            keyboard.press(char)
-            time.sleep(delay)
-            keyboard.release(char)
+
         self.start_button.config(state=tk.NORMAL)
         self.stop_button.config(state=tk.DISABLED)
         self.info_button.config(state=tk.NORMAL)
-
-        if not self.stop_flag:
-            self.start_button.config(state=tk.NORMAL)
-            self.stop_button.config(state=tk.DISABLED)
-            self.info_button.config(state=tk.NORMAL)
 
     def show_info(self):
         info_text = ("Textabtipper ist ein Programm, das einen eingefügten Text abschreibt. Im Gegensatz zu ähnlichen Programmen, unterstützt der Textabtipper auch Umlaute und ß. Das Programm wurde von ChiroKatze07 und mit Hilfe von Künstlicher Intelligenz entwickelt. Das Programm ist komplett gratis und wird auch immer so bleiben!\n\nBedinung: Text einfügen, Verzögerungen eingeben und auf Start drücken!")
