@@ -4,6 +4,8 @@ Das Programm simuliert die Tastendrücke des Textes, den man eingibt und man hat
 
 Dieses Programm wurde inerhalt von nur wenigen Stunden programmiert. Daher wird warscheinlich Fehler geben.
 
+Bitte stelle sicher, dass Python auf deinem PC installiert ist. Danach musst du "pip install pynput" eingeben.
+
 Bedienung:
 1.) Text eingeben
 2.) Delays eingeben
